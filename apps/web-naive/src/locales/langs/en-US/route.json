@@ -1,0 +1,11 @@
+{
+  "sys": {
+    "title": "System",
+    "core": {
+      "title": "Configuration",
+      "dictionary": {
+        "title": "Dictionary"
+      }
+    }
+  }
+}

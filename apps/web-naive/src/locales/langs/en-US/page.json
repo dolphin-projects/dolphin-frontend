@@ -11,5 +11,14 @@
     "title": "Dashboard",
     "analytics": "Analytics",
     "workspace": "Workspace"
+  },
+  "sys": {
+    "core": {
+      "dictionary": {
+        "name":"Name",
+        "code":"Code",
+        "type":"Type"
+      }
+    }
   }
 }

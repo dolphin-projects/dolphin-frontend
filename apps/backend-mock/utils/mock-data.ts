@@ -52,6 +52,16 @@ const dashboardMenus = [
     path: '/dashboard',
     component: '/dashboard/workspace/index',
   },
+  {
+    meta: {
+      order: 1,
+      icon: 'carbon:data-base',
+      title: '数据字典',
+    },
+    name: 'Dict',
+    path: '/dict',
+    component: '/dict/index',
+  },
 ];
 
 export const MOCK_MENUS = [
@@ -83,6 +93,20 @@ export const MOCK_MENU_LIST = [
       title: 'page.dashboard.workspace',
       affixTab: true,
       order: 0,
+    },
+  },
+  {
+    id: 2,
+    name: 'Dict',
+    status: 1,
+    type: 'menu',
+    icon: 'carbon:data-base',
+    path: '/dict',
+    component: '/dict/index',
+    meta: {
+      icon: 'carbon:data-base',
+      title: '数据字典',
+      order: 1,
     },
   },
 ];

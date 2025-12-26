@@ -8,6 +8,7 @@ import { $t } from '@vben/locales';
 import { NButton, NIcon } from 'naive-ui';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
+import { pageCoreDictionary } from '#/api';
 
 // ******************** 数据定义 ********************
 // 组件定义
@@ -24,18 +25,24 @@ const [Grid, gridApi] = useVbenVxeGrid({
         fieldName: 'name',
         label: $t('page.sys.core.dictionary.name'),
       },
-      {
-        component: 'Input',
-        fieldName: 'code',
-        label: $t('page.sys.core.dictionary.code'),
-      },
+      // {
+      //   component: 'Input',
+      //   fieldName: 'code',
+      //   label: $t('page.sys.core.dictionary.code'),
+      // },
       {
         component: 'Select',
         componentProps: {
           allowClear: true,
           options: [
-            { label: $t('common.enabled'), value: 'enum' },
-            { label: $t('common.disabled'), value: 'tree' },
+            {
+              label: $t('page.sys.core.dictionary.enums.type.enum'),
+              value: 'enum',
+            },
+            {
+              label: $t('page.sys.core.dictionary.enums.type.tree'),
+              value: 'tree',
+            },
           ],
         },
         fieldName: 'type',
@@ -49,28 +56,32 @@ const [Grid, gridApi] = useVbenVxeGrid({
       {
         field: 'name',
         title: $t('page.sys.core.dictionary.name'),
-        width: 200,
       },
       {
         field: 'code',
         title: $t('page.sys.core.dictionary.code'),
-        width: 200,
       },
       {
         field: 'type',
         title: $t('page.sys.core.dictionary.type'),
-        width: 100,
+        maxWidth: 100,
       },
     ],
     height: 'auto',
     keepSource: true,
     proxyConfig: {
+      response: {
+        result: 'records',
+      },
       ajax: {
-        query: async () => {
-          return {
-            total: 0,
-            items: [],
-          };
+        query: async ({ page }, formValues) => {
+          const pageVO = await pageCoreDictionary({
+            pageIndex: page.currentPage,
+            pageSize: page.pageSize,
+            query: formValues,
+          });
+          // 直接返回原始数据，让VXETable根据props配置解析
+          return pageVO;
         },
       },
     },
@@ -84,13 +95,14 @@ const [Grid, gridApi] = useVbenVxeGrid({
       search: true,
       zoom: true,
     },
-  } as VxeTableGridOptions,
+  } as VxeTableGridOptions<Sys.Core.DictionaryVO>,
 });
 
 // ******************** 事件定义 ********************
 // 创建
 function onCreate() {
   // formDrawerApi.setData({}).open();
+  gridApi.query();
 }
 </script>
 

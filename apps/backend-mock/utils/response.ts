@@ -6,37 +6,30 @@ export function useResponseSuccess<T = any>(data: T) {
   return {
     code: '00000000',
     data,
-    error: null,
     message: 'ok',
   };
 }
 
 export function usePageResponseSuccess<T = any>(
-  page: number | string,
-  pageSize: number | string,
-  list: T[],
-  { message = 'ok' } = {},
+  pageIndex: number,
+  pageSize: number,
+  total: number,
+  records: T[],
 ) {
-  const pageData = pagination(
-    Number.parseInt(`${page}`),
-    Number.parseInt(`${pageSize}`),
-    list,
-  );
+  const pageData = pagination(pageIndex, pageSize, records);
 
-  return {
-    ...useResponseSuccess({
-      items: pageData,
-      total: list.length,
-    }),
-    message,
-  };
+  return useResponseSuccess({
+    pageIndex,
+    pageSize,
+    records: pageData,
+    total,
+  });
 }
 
-export function useResponseError(message: string, error: any = null) {
+export function useResponseError(message: string) {
   return {
     code: -1,
     data: null,
-    error,
     message,
   };
 }
@@ -46,12 +39,12 @@ export function forbiddenResponse(
   message = 'Forbidden Exception',
 ) {
   setResponseStatus(event, 403);
-  return useResponseError(message, message);
+  return useResponseError(message);
 }
 
 export function unAuthorizedResponse(event: H3Event<EventHandlerRequest>) {
   setResponseStatus(event, 401);
-  return useResponseError('Unauthorized Exception', 'Unauthorized Exception');
+  return useResponseError('Unauthorized Exception');
 }
 
 export function sleep(ms: number) {
@@ -59,11 +52,11 @@ export function sleep(ms: number) {
 }
 
 export function pagination<T = any>(
-  pageNo: number,
+  pageIndex: number,
   pageSize: number,
   array: T[],
 ): T[] {
-  const offset = (pageNo - 1) * Number(pageSize);
+  const offset = (pageIndex - 1) * Number(pageSize);
   return offset + Number(pageSize) >= array.length
     ? array.slice(offset)
     : array.slice(offset, offset + Number(pageSize));

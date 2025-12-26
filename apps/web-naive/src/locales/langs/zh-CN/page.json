@@ -17,7 +17,13 @@
       "dictionary": {
         "name":"名称",
         "code":"代码",
-        "type":"类型"
+        "type":"类型",
+        "enums": {
+          "type": {
+            "enum": "枚举",
+            "tree": "树型"
+          }
+        }
       }
     }
   }

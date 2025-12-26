@@ -11,10 +11,7 @@ export default defineEventHandler(async (event) => {
   const { password, username } = await readBody(event);
   if (!password || !username) {
     setResponseStatus(event, 400);
-    return useResponseError(
-      'BadRequestException',
-      'Username and password are required',
-    );
+    return useResponseError('Username and password are required');
   }
 
   const userInfo = MOCK_USERS.find(

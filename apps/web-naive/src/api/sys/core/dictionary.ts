@@ -1,13 +1,13 @@
-import { baseRequestClient } from '#/api/request';
+import { requestClient } from '#/api/request';
 
 /**
- * 退出登录
+ * 数据字典 - 分页查询
  */
 export async function pageCoreDictionary(
   pageDTO: PageDTO<Sys.Core.DictionaryDTO>,
 ) {
-  return baseRequestClient.post<PageVO<Sys.Core.DictionaryVO>>(
-    '/auth/logout',
+  return requestClient.post<PageVO<Sys.Core.DictionaryVO>>(
+    '/sys/core/dictionary/paginate',
     pageDTO,
     {
       withCredentials: true,

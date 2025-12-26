@@ -11,5 +11,5 @@ interface PageVO<T> {
   pageIndex: number;
   pageSize: number;
   total: number;
-  records: T[];
+  records: Array<T>;
 }

@@ -17,7 +17,13 @@
       "dictionary": {
         "name":"Name",
         "code":"Code",
-        "type":"Type"
+        "type":"Type",
+        "enums": {
+          "type": {
+            "enum": "Enum",
+            "tree": "tree"
+          }
+        }
       }
     }
   }

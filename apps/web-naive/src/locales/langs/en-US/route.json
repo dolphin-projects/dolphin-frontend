@@ -6,6 +6,12 @@
       "dictionary": {
         "title": "Dictionary"
       }
+    },
+    "rbac": {
+      "title": "Organization",
+      "region": {
+        "title": "Region"
+      }
     }
   }
 }

@@ -1,5 +1,6 @@
 import { eventHandler } from 'h3';
 import { verifyAccessToken } from '~/utils/auth';
+import { MOCK_CODES } from '~/utils/data';
 import { unAuthorizedResponse, useResponseSuccess } from '~/utils/response';
 
 export default eventHandler((event) => {
@@ -7,8 +8,9 @@ export default eventHandler((event) => {
   if (!userinfo) {
     return unAuthorizedResponse(event);
   }
-  return useResponseSuccess({
-    url: 'https://unpkg.com/@vbenjs/static-source@0.1.7/source/logo-v1.webp',
-  });
-  // return useResponseError("test")
+
+  const codes =
+    MOCK_CODES.find((item) => item.username === userinfo.username)?.codes ?? [];
+
+  return useResponseSuccess(codes);
 });

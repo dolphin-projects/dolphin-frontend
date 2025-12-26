@@ -14,9 +14,8 @@ import {
 import { useAccessStore } from '@vben/stores';
 
 import { message } from '#/adapter/naive';
+import { postAuthRefresh } from '#/api';
 import { useAuthStore } from '#/store';
-
-import { refreshTokenApi } from './core';
 
 const { apiURL } = useAppConfig(import.meta.env, import.meta.env.PROD);
 
@@ -49,10 +48,12 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
    */
   async function doRefreshToken() {
     const accessStore = useAccessStore();
-    const resp = await refreshTokenApi();
-    const newToken = resp.data;
-    accessStore.setAccessToken(newToken);
-    return newToken;
+    const tokenVO = await postAuthRefresh(accessStore.refreshToken);
+    if (tokenVO && tokenVO.accessToken && tokenVO.refreshToken) {
+      accessStore.setAccessToken(tokenVO.accessToken);
+      accessStore.setRefreshToken(tokenVO.refreshToken);
+    }
+    return tokenVO?.accessToken;
   }
 
   function formatToken(token: null | string) {
